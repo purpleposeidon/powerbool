@@ -1,0 +1,6 @@
+[package]
+name = "powerbool"
+version = "0.1.0"
+authors = ["purpleposeidon <purpleposeidon@gmail.com>"]
+
+[dependencies]
