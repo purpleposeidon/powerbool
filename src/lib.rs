@@ -1,4 +1,4 @@
-//! Semantically encriched booleans.
+//! Semantically enriched value mutation.
 
 /// This trait adds ergonomic convenience functions to `bool`.
 pub trait PowerBool {
@@ -66,16 +66,16 @@ impl PowerBool for bool {
     
     #[inline(always)]
     fn trip(&mut self, val: bool) -> bool {
-        if val && !*self {
+        let ret = val && !*self;
+        if ret {
             *self = true;
-            return true;
         }
-        false
+        ret
     }
 }
 
 #[cfg(test)]
-mod test {
+mod test_powerbool {
     //! It would be silly to have two names for the same truth table.
     //!
     //! But some things are acceptable:
@@ -138,5 +138,39 @@ mod test {
     fn punch() {
         truth_table_row(false, bool::punch, false, true);
         truth_table_row(true, bool::punch, true, true);
+    }
+}
+
+pub trait Change {
+    /// If this value does not equal the other value, become that value and return true.
+    #[inline(always)]
+    fn change(&mut self, v: Self) -> bool;
+}
+impl<T: PartialEq> Change for T {
+    #[inline(always)]
+    fn change(&mut self, v: Self) -> bool {
+        if self != &v {
+            *self = v;
+            true
+        } else {
+            false
+        }
+    }
+}
+
+#[cfg(test)]
+mod test_change {
+    use super::Change;
+
+    #[test]
+    fn works() {
+        let mut x = 1;
+        assert!(x.change(2));
+    }
+
+    #[test]
+    fn still_works() {
+        let mut x = 1;
+        assert!(!x.change(1));
     }
 }
