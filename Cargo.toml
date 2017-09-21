@@ -2,5 +2,10 @@
 name = "powerbool"
 version = "0.1.1"
 authors = ["purpleposeidon <purpleposeidon@gmail.com>"]
+description = "Semantically enriched value mutation."
+repository = "https://github.com/purpleposeidon/powerbools"
+# Defies categorization.
+license = "MIT / Apache-2.0"
+maintanence = { status = "as-is" }
 
 [dependencies]
